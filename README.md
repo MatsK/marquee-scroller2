@@ -1,3 +1,8 @@
+# Todo
+- translate + localize news and weather
+- API support
+- document
+
 # Marquee Scroller (Clock, Weather, News, and More)
 
 ## NOTICE

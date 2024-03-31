@@ -37,13 +37,13 @@ void OpenWeatherMapClient::updateWeatherApiKey(String ApiKey) {
 void OpenWeatherMapClient::updateWeather() {
   WiFiClient weatherClient;
   if (myApiKey == "") {
-    weathers[0].error = "Please provide an API key for weather.";
+    weathers[0].error = "Prosím poskytnite API kľúč pre počasie.";
     Serial.println(weathers[0].error);
     return;
   }
   String apiGetData = "GET /data/2.5/group?id=" + myCityIDs + "&units=" + units + "&cnt=1&APPID=" + myApiKey + " HTTP/1.1";
 
-  Serial.println("Getting Weather Data");
+  Serial.println("Získavanie údajov o počasí");
   Serial.println(apiGetData);
   weathers[0].cached = false;
   weathers[0].error = "";
@@ -55,31 +55,31 @@ void OpenWeatherMapClient::updateWeather() {
     weatherClient.println();
   } 
   else {
-    Serial.println("connection for weather data failed"); //error message if no client connect
+    Serial.println("pripojenie pre údaje o počasí zlyhalo"); //error message if no client connect
     Serial.println();
-    weathers[0].error = "Connection for weather data failed";
+    weathers[0].error = "Pripojenie pre údaje o počasí zlyhalo";
     return;
   }
 
   while(weatherClient.connected() && !weatherClient.available()) delay(1); //waits for data
  
-  Serial.println("Waiting for data");
+  Serial.println("Čakanie na údaje");
 
   // Check HTTP status
   char status[32] = {0};
   weatherClient.readBytesUntil('\r', status, sizeof(status));
-  Serial.println("Response Header: " + String(status));
+  Serial.println("Hlavička odpovede: " + String(status));
   if (strcmp(status, "HTTP/1.1 200 OK") != 0) {
-    Serial.print(F("Unexpected response: "));
+    Serial.print(F("Neočakávaná odpoveď: "));
     Serial.println(status);
-    weathers[0].error = "Weather Data Error: " + String(status);
+    weathers[0].error = "Chyba údajov o počasí: " + String(status);
     return;
   }
 
     // Skip HTTP headers
   char endOfHeaders[] = "\r\n\r\n";
   if (!weatherClient.find(endOfHeaders)) {
-    Serial.println(F("Invalid response"));
+    Serial.println(F("Neplatná odpoveď"));
     return;
   }
 
@@ -89,18 +89,18 @@ void OpenWeatherMapClient::updateWeather() {
   // Parse JSON object
   JsonObject& root = jsonBuffer.parseObject(weatherClient);
   if (!root.success()) {
-    Serial.println(F("Weather Data Parsing failed!"));
-    weathers[0].error = "Weather Data Parsing failed!";
+    Serial.println(F("Analýza údajov o počasí zlyhala!"));
+    weathers[0].error = "Analýza údajov o počasí zlyhala!";
     return;
   }
 
   weatherClient.stop(); //stop client
 
   if (root.measureLength() <= 150) {
-    Serial.println("Error Does not look like we got the data.  Size: " + String(root.measureLength()));
+    Serial.println("Chyba Nezdá sa, že sme získali údaje. Veľkosť: " + String(root.measureLength()));
     weathers[0].cached = true;
     weathers[0].error = (const char*)root["message"];
-    Serial.println("Error: " + weathers[0].error);
+    Serial.println("Chyba: " + weathers[0].error);
     return;
   }
   int count = root["cnt"];

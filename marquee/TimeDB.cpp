@@ -135,13 +135,13 @@ String TimeDB::getMonthName() {
       rtnValue = "Apr";
       break;
     case 5:
-      rtnValue = "May";
+      rtnValue = "Maj";
       break;
     case 6:
-      rtnValue = "June";
+      rtnValue = "Jun";
       break;
     case 7:
-      rtnValue = "July";
+      rtnValue = "Jul";
       break;
     case 8:
       rtnValue = "Aug";
@@ -150,7 +150,7 @@ String TimeDB::getMonthName() {
       rtnValue = "Sep";
       break;
     case 10:
-      rtnValue = "Oct";
+      rtnValue = "Okt";
       break;
     case 11:
       rtnValue = "Nov";

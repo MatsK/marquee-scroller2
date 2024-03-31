@@ -293,7 +293,7 @@ String OpenWeatherMapClient::getWeekDay(int index, float offset) {
     day = (((epoc + (3600 * (int)offset)) / 86400) + 4) % 7;
     switch (day) {
       case 0:
-        rtnValue = "Nedeľa";
+        rtnValue = "Nedela";
         break;
       case 1:
         rtnValue = "Pondelok";
@@ -305,7 +305,7 @@ String OpenWeatherMapClient::getWeekDay(int index, float offset) {
         rtnValue = "Streda";
         break;
       case 4:
-        rtnValue = "Štvrtok";
+        rtnValue = "Stvrtok";
         break;
       case 5:
         rtnValue = "Piatok";
